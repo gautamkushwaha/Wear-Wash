@@ -21,6 +21,14 @@ const userSchema = new mongoose.Schema({
     enum: ["customer", "pg_incharge", "owner", "customer_care"],
     default: "customer",
   },
+  age : {
+    type: Number,
+    required: true,
+  },
+  gender : {
+    type: String,
+    required: true,
+  }
 });
 
 // userSchema.pre('save', async function (next) {

@@ -22,7 +22,7 @@ const todayDate = getTodayDate();
 
   useEffect(() => {
     fetchBookings();
-  }, []);
+  },);
 
   const fetchBookings = async () => {
 
