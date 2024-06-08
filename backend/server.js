@@ -9,13 +9,14 @@ const { dbConnect } = require("./config/db.jsx");
 const errorHandler = require("./middleware/errorHandler");
 const OrderRouter = require("./routes/orderRoutes.jsx");
 const GetTimeSlotsRouter = require("./routes/GetTimeSlots.js");
+const adminBookingsRouter = require("./routes/adminBookingsRouter.js");
 // const PayRouter = require("./routes/PayRouter.jsx");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false })); 
 
 // Connect to MongoDB
 dbConnect();
@@ -30,7 +31,7 @@ app.use("/api/order",OrderRouter );
 app.use("/api/payments", paymentRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/gettimeslots",GetTimeSlotsRouter);
-
+app.use("/api/admin/bookings", adminBookingsRouter);
 
 
 //using middleware for errorhandling
