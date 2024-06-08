@@ -68,8 +68,12 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -86,6 +90,8 @@ const Register = () => {
     try {
       const response = await axios.post('http://localhost:5001/api/auth/register', formData);
       console.log('Registration successful:', response.data);
+      navigate('/login');
+
     } catch (error) {
       console.error('Error registering user:', error.response.data);
     }
