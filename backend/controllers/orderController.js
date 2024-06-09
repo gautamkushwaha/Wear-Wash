@@ -90,7 +90,7 @@ const orderController = asynchandler(async (req, res) => {
   const activityDataController = asynchandler(async (req,res)=>{
     
     function isDateOlderThanToday(inputDate) {
-      // Parse the input date
+      // Parse the input date 
       const dateToCheck = new Date(inputDate);
   
       // Get the current date
