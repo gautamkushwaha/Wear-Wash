@@ -9,7 +9,7 @@ const { dbConnect } = require("./config/db.jsx");
 const errorHandler = require("./middleware/errorHandler");
 const OrderRouter = require("./routes/orderRoutes.jsx");
 const GetTimeSlotsRouter = require("./routes/GetTimeSlots.js");
-const adminBookingsRouter = require("./routes/adminBookingsRouter.js");
+const adminRouter = require("./routes/adminRouter.js");
 // const PayRouter = require("./routes/PayRouter.jsx");
 
 const app = express();
@@ -31,7 +31,7 @@ app.use("/api/order",OrderRouter );
 app.use("/api/payments", paymentRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/gettimeslots",GetTimeSlotsRouter);
-app.use("/api/admin/bookings", adminBookingsRouter);
+app.use("/api/admin/", adminRouter);
 
 
 //using middleware for errorhandling

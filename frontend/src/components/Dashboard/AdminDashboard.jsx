@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const AdminDashboard = () => {
-  const [bookings, setBookings] = useState([]);
-  const [date, setDate] = useState([]);
-  const [error , setError] = useState([]);
+  const [data, setdata] = useState({
+   
+  });
+  const [date, setDate] = useState();
+  const [error , setError] = useState('');
+  // const [timeslots,setTimeslots] = useState([]);
 
   const getTodayDate = () => {
     const today = new Date();
@@ -22,7 +25,8 @@ const todayDate = getTodayDate();
 
   useEffect(() => {
     fetchBookings();
-  },);
+
+  },[]);
 
   const fetchBookings = async () => {
 
@@ -32,7 +36,7 @@ const todayDate = getTodayDate();
       // const res = await axios.get('/api/bookings');
       // setBookings(res.data);
         
-      const res = await axios.get('http://localhost:5001/api/admin/bookings',{
+      const res = await axios.get('http://localhost:5001/api/admin/',{
         headers: {
           // 'Content-Type': 'application/json',
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -42,7 +46,7 @@ const todayDate = getTodayDate();
         }
       });
 
-      // console.log(res); 
+      console.log(res); 
       
       if(res.data.msg === "user is not admin"){
         setError("user is not admin");
@@ -50,9 +54,18 @@ const todayDate = getTodayDate();
       else{
 
         
-        const data = res.data ; 
+         
+        const finalres = res.data;
+
+        console.log(finalres);
+        setdata(finalres);
+
+        
+        // setTimeslots();
+       
+
+
       
-      setBookings(data);
       }
       
     } catch (error) {
@@ -66,12 +79,17 @@ const todayDate = getTodayDate();
       <h2 className="text-2xl font-semibold">All Bookings of the day {todayDate}</h2>
 
       <ul>
-        {bookings?.map((booking) => (
+        {data.Bookingdata?.map((booking) => (
           <li key={booking._id}>
             {booking.machine} - {booking.timeSlot}
           </li>
         ))}
       </ul>
+      <div>
+        <h3>total users : {data.totalusers}</h3>
+        <h3>male users :{data.maleusers}</h3>
+        <h3>female users :{data.femaleusers}</h3>
+      </div>
       <h3>{error}</h3>
     </div>
   );

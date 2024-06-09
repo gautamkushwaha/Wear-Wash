@@ -1,10 +1,12 @@
 const asynchandler = require("express-async-handler");
 const Booking = require("../models/Booking.js");
 const jwt = require('jsonwebtoken');
+const User = require("../models/User.js");
 
 
 
-const adminBookingsController = asynchandler(async (req, res) => {
+
+const adminController = asynchandler(async (req, res) => {
 
     let authHeader = req.headers.Authorization || req.headers.authorization;
 
@@ -21,12 +23,23 @@ const adminBookingsController = asynchandler(async (req, res) => {
     });
 
     if(user.email === "dilli@gmail.com"){
-        console.log(req.query);
+        // console.log(req.query);
         const {date} = req.query;
-        const data = await Booking.find({date});
+        const Bookingdata = await Booking.find({date});
+        const totalusers = await User.countDocuments();
+        const maleusers =  await User.countDocuments({gender : "male"}); 
+        const femaleusers =  await User.countDocuments({gender : "female"}); 
         // console.log(data);
         // res.send()
-        res.send(data);
+        // console.log(Bookingdata);
+        res.send({
+          Bookingdata,
+          totalusers,
+          maleusers,
+          femaleusers
+          
+
+        });
     }
     else{
         res.send({msg : "user is not admin"});
@@ -45,4 +58,4 @@ const adminBookingsController = asynchandler(async (req, res) => {
     
 });
 
-module.exports = { adminBookingsController };
+module.exports = { adminController };
