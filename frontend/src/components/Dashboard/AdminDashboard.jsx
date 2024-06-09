@@ -25,20 +25,12 @@ const todayDate = getTodayDate();
 
   useEffect(() => {
     fetchBookings();
-    fetchActivityData();
+   
 
 
   },[]);
 
-  const fetchActivityData = async ()=>{
-      const res = await axios.get('http://localhost:5001/api/bookings/activityData',{
-        headers: {
-          // 'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
-        },
-      }) 
-      console.log(res);  
-  }
+  
 
   const fetchBookings = async () => {
 

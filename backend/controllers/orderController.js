@@ -123,6 +123,7 @@ const orderController = asynchandler(async (req, res) => {
   const userBookingDates = [];
 
   userBookings.map(booking =>{
+    
     console.log(booking.date);
     userBookingDates.push(isDateOlderThanToday(booking.date));
 
@@ -130,7 +131,7 @@ const orderController = asynchandler(async (req, res) => {
   });
 
   console.log(userBookingDates);
-  
+
 
 
 
