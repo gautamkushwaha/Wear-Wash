@@ -1,46 +1,4 @@
-// import React, { useState } from 'react';
-// import axios from 'axios';
 
-// const SlotBooking = () => {
-//   const [machineId, setMachineId] = useState('');
-//   const [slot, setSlot] = useState('');
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const res = await axios.post('/api/bookings/book', { machineId, slot });
-//       console.log('Booking successful', res.data);
-//     } catch (error) {
-//       console.error('Error booking slot', error);
-//     }
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit} className="slot-booking-form">
-//       <div>
-//         <label>Machine ID</label>
-//         <input
-//           type="text"
-//           value={machineId}
-//           onChange={(e) => setMachineId(e.target.value)}
-//           required
-//         />
-//       </div>
-//       <div>
-//         <label>Slot</label>
-//         <inputN
-//           type="datetime-local"
-//           value={slot}
-//           onChange={(e) => setSlot(e.target.value)}
-//           required
-//         />
-//       </div>
-//       <button type="submit">Book Slot</button>
-//     </form>
-//   );
-// };
-
-// export default SlotBooking;
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
@@ -60,19 +18,6 @@ const BookingSlot = () => {
     navigate("/user-dashboard");
   };
 
-  // const timeSlots = generateTimeSlots();
-
-  // const generateTimeSlots =  () => {
-  //   const slots = [];
-  //   for (let hour = 0; hour < 24; hour++) {
-  //     const start = hour < 10 ? `0${hour}:00` : `${hour}:00`;
-  //     const end = hour + 1 < 10 ? `0${hour + 1}:00` : `${hour + 1}:00`;
-  //     slots.push(`${start} - ${end}`);
-  //   }
-
-  //   return slots;
-  // };
-
   const userid = localStorage.getItem("token");
 
   if (!userid) {
@@ -91,10 +36,6 @@ const BookingSlot = () => {
       }
 
       const res = await axios.post("http://localhost:5001/api/gettimeslots", {
-        // headers: {
-        //   Authorization: `Bearer ${localStorage.getItem('token')}`
-        // },
-
         date,
       });
 
@@ -125,8 +66,6 @@ const BookingSlot = () => {
           },
         },
       });
-
-      // console.log(res.data);
 
       const order = res.data;
       console.log(order);
@@ -217,37 +156,43 @@ const BookingSlot = () => {
   };
 
   return (
-    <div className="booking-slot">
-      <h2 className="text-2xl font-semibold">Book a Slot</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+      <h2 className="text-2xl font-semibold mb-4 text-center">Book a Slot</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="machineId">Machine ID:</label>
+        <label htmlFor="machineId" className="block text-sm font-medium text-gray-700">Machine ID:</label>
           <input
             type="text"
             id="machineId"
             value={machineId}
             onChange={(e) => setMachineId(e.target.value)}
-            required
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              required
           />
         </div>
         <div>
-          <label htmlFor="date">Date:</label>
+        <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date:</label>
           <input
             type="date"
             id="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            required
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              required
           />
-          <button onClick={handelTimeSlots}>Get TimeSlots </button>
+          <button 
+          onClick={handelTimeSlots}
+          className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Get TimeSlots </button>
         </div>
         <div>
-          <label htmlFor="timeSlot">Time Slot:</label>
+        <label htmlFor="timeSlot" className="block text-sm font-medium text-gray-700">Time Slot:</label>
           <select
             id="timeSlot"
             value={timeSlot}
             onChange={(e) => setTimeSlot(e.target.value)}
-            required
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              required
           >
             <option value="">Select a date to getytime slot</option>
             {TimeSlots?.map((slot, index) => (
@@ -257,10 +202,13 @@ const BookingSlot = () => {
             ))}
           </select>
         </div>
-        {error && <div className="error">{error}</div>}
-        {success && <div className="success">{success}</div>}
-        <button type="submit">Submit</button>
+        {error && <div className="text-red-600 text-sm error">{error}</div>}
+        {success && <div className="text-green-600 text-sm success">{success}</div>}
+        <button 
+        type="submit" 
+        className="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Submit</button>
       </form>
+    </div>
     </div>
   );
 };

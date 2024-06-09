@@ -1,46 +1,3 @@
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-
-// const UserDashboard = () => {
-//   const [bookings, setBookings] = useState([]);
-
-//   useEffect(() => {
-//     const fetchUserBookings = async () => {
-//       try {
-//         const res = await axios.get('/api/bookings/user');
-//         setBookings(res.data);
-//       } catch (error) {
-//         console.error('Error fetching user bookings', error);
-//       }
-//     };
-//     fetchUserBookings();
-//   }, []);
-
-//   return (
-//     <div className="user-dashboard">
-//       <h2 className="text-2xl font-semibold">My Bookings</h2>
-//       <ul>
-//         {bookings.map((booking) => (
-//           <li key={booking._id}>
-//             {booking.machineId} - {booking.slot}
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default UserDashboard;
-// import React from 'react'
-
-// function UserDashboard() {
-//   return (
-//     <div>
-//       <h1>user dashboard</h1>
-//     </div>
-//   )
-// }
-
 
 
 
@@ -89,36 +46,49 @@ const  UserDashboard = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <div className="flex items-center justify-center min-h-screen">{error}</div>;
   }
 
   return (
-    <div className="user-dashboard">
-      <h2 className="text-2xl font-semibold">My Bookings</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+    <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+      <h2 className="text-2xl font-semibold mb-4 text-center">My Bookings</h2>
       {bookings.length === 0 ? (
-        <p>No bookings available.</p>
+        <p className="text-center">No bookings available.</p>
       ) : (
-        <ul>
-          {bookings.map((booking) =>{
-            
+        <ul className="space-y-2">
+          {bookings.map((booking) => {
             const dateString  = booking.date;
             const date = new Date(dateString);
-const formattedDate = date.toISOString().split('T')[0];
-
-
+            const formattedDate = date.toISOString().split('T')[0];
+            
             return (
-            <li key={booking._id}>
-              {booking.machine} - {formattedDate}- {booking.timeSlot}
-            </li>
-          )})}
+              <li key={booking._id} className="p-2 border-b border-gray-300">
+
+                <p className=''> Machine ID: {booking.machine}</p>
+                <p className=''> Booked Time slot: {formattedDate}</p>
+                <p> Booked time Slot: {booking.timeSlot}</p>
+                <p>Time in Hour:Minute left to start your slot {}</p>
+                <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Start</button>
+              </li>
+            );
+          })}
         </ul>
       )}
-      <button onClick={() => navigate('/slotbooking')}>Book slot</button>
+      <div className="flex justify-center mt-4">
+        <button 
+          onClick={() => navigate('/slotbooking')} 
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          Book Slot
+        </button>
+      </div>
     </div>
+  </div>
   );
 };
 

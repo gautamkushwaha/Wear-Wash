@@ -3,8 +3,7 @@ import Login from '../components/Auth/Login';
 
 const LoginPage = () => {
   return (
-    <div className="login-page">
-      <h2 className="text-2xl font-semibold">Login</h2>
+    <div>
       <Login />
     </div>
   );

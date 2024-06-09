@@ -10,11 +10,14 @@ import AdminDashboard from './components/Dashboard/AdminDashboard';
 import SlotBooking from './components/Booking/SlotBooking';
 import './App.css';
 import NotFoundPage from './pages/NotFoundPage';
+import Header from './components/Layout/Header';
+import Footer from './components/Layout/Footer';
       
 function App() {
   return (
     <div className="App">
       <Router>
+        <Header/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/booking" element={<BookingPage />} />
@@ -26,6 +29,7 @@ function App() {
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="*" element={<NotFoundPage/>} />
         </Routes>
+        <Footer/>
       </Router>
     </div>
   );
