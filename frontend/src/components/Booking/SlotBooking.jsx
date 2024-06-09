@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+ 
 const BookingSlot = () => {
   const [machineId, setMachineId] = useState("");
   const [date, setDate] = useState("");
@@ -28,12 +28,12 @@ const BookingSlot = () => {
   const handelTimeSlots = async () => {
     if (date) {
       // console.log("hello ");
-      const slots = [];
-      for (let hour = 0; hour < 24; hour++) {
-        const start = hour < 10 ? `0${hour}:00` : `${hour}:00`;
-        const end = hour + 1 < 10 ? `0${hour + 1}:00` : `${hour + 1}:00`;
-        slots.push(`${start} - ${end}`);
-      }
+      // const slots = [];
+      // for (let hour = 0; hour < 24; hour++) {
+      //   const start = hour < 10 ? `0${hour}:00` : `${hour}:00`;
+      //   const end = hour + 1 < 10 ? `0${hour + 1}:00` : `${hour + 1}:00`;
+      //   slots.push(`${start} - ${end}`);
+      // }
 
       const res = await axios.post("http://localhost:5001/api/gettimeslots", {
         date,

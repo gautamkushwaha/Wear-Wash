@@ -19,7 +19,7 @@ const bookingSchema = new mongoose.Schema({
   },
   timeSlot: {
     type: String,
-    required: true,
+    required: true, 
     validate: {
       validator: function(v) {
         // Ensure timeSlot is in the correct format

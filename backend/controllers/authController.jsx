@@ -8,9 +8,9 @@ const dotenv = require('dotenv').config();
 //@route POST /api/user/register
 //@access public
 const register = asynchandler(async (req, res) => {
-  const { username, email, password,role } = req.body;
-  console.log(username, email, password);
-  if (!username || !email || !password||!role) {
+  const { username, email, password,role,age,gender } = req.body;
+  console.log(username, email, password ,age ,gender);
+  if (!username || !email || !password||!role || !age || !gender) {
     res.status(400);
     throw new Error('ALL fields are mandatory');
   }
@@ -28,6 +28,9 @@ const register = asynchandler(async (req, res) => {
     email,
     password: Hashedpassword,
     role,
+    gender,
+    age,
+
   });
   console.log(`user created ${user}`);
   if (user) {
