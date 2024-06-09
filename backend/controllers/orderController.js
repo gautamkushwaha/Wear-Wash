@@ -2,6 +2,10 @@ const asynchandler = require("express-async-handler");
 const Razorpay = require("razorpay");
 require("dotenv").config();
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const User = require("../models/User");
+const Booking = require("../models/Booking");
+
 
 
 
@@ -83,6 +87,64 @@ const orderController = asynchandler(async (req, res) => {
   });
 
 
+  const activityDataController = asynchandler(async (req,res)=>{
+    
+    function isDateOlderThanToday(inputDate) {
+      // Parse the input date
+      const dateToCheck = new Date(inputDate);
+  
+      // Get the current date
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Set the time to midnight to compare only the date part
+  
+      // Compare the dates
+      return dateToCheck > today;
+  }
+  let decodeduserid ;
+  let token;
+  let authHeader = req.headers.Authorization || req.headers.authorization;
+  if (authHeader && authHeader.startsWith('Bearer')) {
+    token = authHeader.split(' ')[1];
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+      if (err) {
+        res.status(401);
+        throw new Error('User is not authorized');
+      }
+   decodeduserid = decoded.user.id;
+      console.log("hello from activity");
+      console.log(decodeduserid);
+      
+    })
+  }
+
+  const userBookings = await Booking.find({user : decodeduserid});
+  // console.log("userBookings", userBookings);
+
+  const userBookingDates = [];
+
+  userBookings.map(booking =>{
+    console.log(booking.date);
+    userBookingDates.push(isDateOlderThanToday(booking.date));
+
+    // userBookingDates.push(booking.date);
+  });
+
+  console.log(userBookingDates);
+  
 
 
-module.exports = { orderController,orderValidationController };
+
+  
+
+
+  res.send({msg : "response from activity"});
+  
+
+
+  })
+  
+
+
+
+
+module.exports = { orderController,orderValidationController, activityDataController };

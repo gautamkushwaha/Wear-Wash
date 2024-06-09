@@ -9,7 +9,7 @@ const bookingSchema = new mongoose.Schema({
   },
   machine: {
     // type: mongoose.Schema.Types.ObjectId,
-    type : String,
+    type : String, 
     // ref: 'Machine',
     required: true,
   },

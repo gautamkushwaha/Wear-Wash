@@ -25,8 +25,20 @@ const todayDate = getTodayDate();
 
   useEffect(() => {
     fetchBookings();
+    fetchActivityData();
+
 
   },[]);
+
+  const fetchActivityData = async ()=>{
+      const res = await axios.get('http://localhost:5001/api/bookings/activityData',{
+        headers: {
+          // 'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }) 
+      console.log(res);  
+  }
 
   const fetchBookings = async () => {
 
@@ -46,7 +58,7 @@ const todayDate = getTodayDate();
         }
       });
 
-      console.log(res); 
+      // console.log(res); 
       
       if(res.data.msg === "user is not admin"){
         setError("user is not admin");
@@ -57,7 +69,7 @@ const todayDate = getTodayDate();
          
         const finalres = res.data;
 
-        console.log(finalres);
+        // console.log(finalres);
         setdata(finalres);
 
         
