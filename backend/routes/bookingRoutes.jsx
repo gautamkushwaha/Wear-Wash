@@ -15,7 +15,7 @@
 // module.exports = router;
 
 const express = require('express');
-const { orderController,orderValidationController } = require('../controllers/orderController');
+const { orderController,orderValidationController, activityDataController } = require('../controllers/orderController');
 const validateToken = require('../middleware/validateTokenHandler.js');
 // const { default: BookingSlot } = require('../../frontend/src/components/Booking/SlotBooking.jsx');
 const {bookSlot,getBookings} = require("../controllers/bookingController.jsx");
@@ -31,6 +31,7 @@ const router = express.Router();
 router.post("/",bookSlot);
 router.post("/validate", orderValidationController);
 router.get('/', getBookings);
+router.get("/activityData",activityDataController);
 
 
 module.exports = router;
