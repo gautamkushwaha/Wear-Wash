@@ -2,6 +2,8 @@ const asynchandler = require("express-async-handler");
 const Booking = require("../models/Booking.js");
 const jwt = require('jsonwebtoken');
 const User = require("../models/User.js");
+require("dotenv").config();
+
 
 
 
@@ -15,14 +17,17 @@ const adminController = asynchandler(async (req, res) => {
     token = authHeader.split(' ')[1];
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
       if (err) {
-        res.status(401).send({msg : "user is not authorized"});
+        res.status(401).send({msg : "user is not authorized"}); 
         throw new Error('User is not authorized');
       }
     user = decoded.user; 
    
     });
 
-    if(user.email === "dilli@gmail.com"){
+    console.log("hello from admin");
+    console.log(user.email , process.env.SUPER_ADMIN);
+
+    if(user.email === process.env.SUPER_ADMIN ){
         // console.log(req.query);
         const {date} = req.query;
         const Bookingdata = await Booking.find({date});

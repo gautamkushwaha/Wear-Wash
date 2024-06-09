@@ -22,31 +22,45 @@ const  UserDashboard = () => {
   
 
   useEffect(() => {
-    const fetchUserBookings = async () => {
-      try {
-        const res = await axios.get('http://localhost:5001/api/bookings', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-          }
-        });
-       
-        // Ensure the response data is an array
-        if (Array.isArray(res.data)) {
-          // console.log(res.data);
-          setBookings(res.data);
-        } else {
-          throw new Error('Unexpected response format');
-        }
-      } catch (error) {
-        setError('Error fetching user bookings try logging in ');
-        console.error('Error fetching user bookings', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
+    
     fetchUserBookings();
+    fetchActivityData();
   }, []);
+
+  const fetchActivityData = async ()=>{
+    const res = await axios.get('http://localhost:5001/api/bookings/activityData',{
+      headers: {
+        // 'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    }) 
+    console.log(res);  
+}
+
+
+  const fetchUserBookings = async () => {
+    try {
+      const res = await axios.get('http://localhost:5001/api/bookings', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+     
+      // Ensure the response data is an array
+      if (Array.isArray(res.data)) {
+        // console.log(res.data);
+        setBookings(res.data);
+      } else {
+        throw new Error('Unexpected response format');
+      }
+    } catch (error) {
+      setError('Error fetching user bookings try logging in ');
+      console.error('Error fetching user bookings', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   if (loading) {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
