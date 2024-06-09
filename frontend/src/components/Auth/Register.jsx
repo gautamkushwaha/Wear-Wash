@@ -78,7 +78,10 @@ const Register = () => {
     username: '',
     email: '',
     password: '',
-    role: ''
+    role: '',
+    gender: '',
+    age: '' ,
+
   });
 
   const handleChange = (e) => {
@@ -88,6 +91,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(formData);
       const response = await axios.post('http://localhost:5001/api/auth/register', formData);
       console.log('Registration successful:', response.data);
       navigate('/login');
@@ -115,6 +119,26 @@ const Register = () => {
         <label>Role:</label>
         <input type="text" name="role" value={formData.role} onChange={handleChange} required />
       </div>
+
+      <div>
+                <label htmlFor="gender">Gender:</label>
+                <select id="gender" name='gender' value={formData.gender} onChange={handleChange}>
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            <div>
+                <label htmlFor="age">Age:</label>
+                <input
+                    type="number"
+                    name='age'
+                    id="age"
+                    value={formData.age}
+                    onChange={handleChange}
+                />
+            </div>
+
       <button type="submit">Register</button>
     </form>
   );
